@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards & Revision Maker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Flashcards & Revision Maker</h1>
+
+    <div id="create-section">
+        <h2>Create a Flashcard</h2>
+        <input type="text" id="question" placeholder="Question / Term">
+        <textarea id="answer" placeholder="Answer / Definition"></textarea>
+        <button id="add-btn">Add Flashcard</button>
+    </div>
+
+    <hr>
+
+    <div id="cards-section">
+        <h2>Your Flashcards</h2>
+        <div id="flashcards"></div>
+    </div>
+
+    <hr>
+
+    <div id="review-section">
+        <h2>Review Flashcards</h2>
+        <button id="prev-btn">Previous</button>
+        <span id="card-index">0 / 0</span>
+        <button id="next-btn">Next</button>
+        <div id="review-card"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
