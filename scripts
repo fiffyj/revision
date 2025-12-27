@@ -1,0 +1,86 @@
+let flashcards = JSON.parse(localStorage.getItem("flashcards")) || [];
+let currentIndex = 0;
+
+const questionInput = document.getElementById("question");
+const answerInput = document.getElementById("answer");
+const addBtn = document.getElementById("add-btn");
+const flashcardsDiv = document.getElementById("flashcards");
+const reviewCardDiv = document.getElementById("review-card");
+const cardIndexSpan = document.getElementById("card-index");
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+
+function saveCards() {
+    localStorage.setItem("flashcards", JSON.stringify(flashcards));
+}
+
+function displayFlashcards() {
+    flashcardsDiv.innerHTML = "";
+    flashcards.forEach((card, i) => {
+        let div = document.createElement("div");
+        div.className = "flashcard";
+        div.innerHTML = `
+            <strong>${card.question}</strong><br>
+            ${card.answer}<br>
+            <button onclick="deleteCard(${i})">Delete</button>
+        `;
+        flashcardsDiv.appendChild(div);
+    });
+    updateReview();
+}
+
+function addCard() {
+    const q = questionInput.value.trim();
+    const a = answerInput.value.trim();
+
+    if (!q || !a) {
+        alert("Both fields are required!");
+        return;
+    }
+
+    flashcards.push({ question: q, answer: a });
+    questionInput.value = "";
+    answerInput.value = "";
+
+    saveCards();
+    displayFlashcards();
+}
+
+function deleteCard(index) {
+    flashcards.splice(index, 1);
+    saveCards();
+    displayFlashcards();
+}
+
+function updateReview() {
+    if (flashcards.length === 0) {
+        reviewCardDiv.textContent = "No flashcards yet.";
+        cardIndexSpan.textContent = "0 / 0";
+        return;
+    }
+
+    const card = flashcards[currentIndex];
+    reviewCardDiv.innerHTML = `
+        <strong>${card.question}</strong><br>
+        ${card.answer}
+    `;
+    cardIndexSpan.textContent = `${currentIndex + 1} / ${flashcards.length}`;
+}
+
+prevBtn.onclick = () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateReview();
+    }
+};
+
+nextBtn.onclick = () => {
+    if (currentIndex < flashcards.length - 1) {
+        currentIndex++;
+        updateReview();
+    }
+};
+
+addBtn.onclick = addCard;
+
+displayFlashcards();
